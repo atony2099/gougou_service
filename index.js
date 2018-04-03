@@ -32,16 +32,18 @@ const useMiddlewares = (app) => {
 
 
 
-
-
-
-
 // add 组件
-
 app.use(logger())
 app.use(session(app))
-app.use(bodyParser())
+// app.use(bodyParser())
 
+// app.use(bodyParser());
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser({
+  onerror: function (err, ctx) {
+    ctx.throw('body parse error', 422);
+  }
+}));
 
 
 app.listen(8080);

@@ -5,13 +5,13 @@ const {getCode,verifyCode} = require('../service/user')
 export class User {
   @get('/code')
   async getVerifyCode (ctx, next) {
-    // console.log("curent====ctx",ctx);
     try {
       let verifyCode = await getCode(ctx)
       ctx.body = {
         success: true,
         verifyCode
       }
+      console.log(ctx.body);
     } catch (e) {
       console.log("error",e);
       ctx.body = {
@@ -21,9 +21,8 @@ export class User {
     }
   }
 
-
-  @get('/verify')
-  async verifyCode(ctx,next) {
+  @post('/verify')
+  async verifyCode (ctx,next) {
       try {
         let user = await verifyCode(ctx)
         if (user) {
@@ -36,6 +35,9 @@ export class User {
             err:'手机号或者验证码为空'
           }
         }
+
+        console.log(ctx.body);
+
       } catch (e) {
 
         console.log("has error",e);

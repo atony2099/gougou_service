@@ -6,7 +6,6 @@ const uuidv4 = require('uuid/v4');
 
 
 export const getCode  =  async (ctx) => {
-  // xss攻击
   var User = mongoose.model('User')
   let {phoneNumber} = ctx.query
   phoneNumber = xss(phoneNumber.trim())
@@ -26,16 +25,15 @@ export const getCode  =  async (ctx) => {
   }
 
   await user.save()
-
   return verifyCode
 }
 
 
 export const verifyCode = async (ctx) => {
   var User = mongoose.model('User')
-  console.log("ctx === body", ctx.query);
-  let {phoneNumber,verifyCode} = ctx.query
 
+  console.log("ctx === body", ctx.request,ctx.request.body);
+  let {phoneNumber,verifyCode} = ctx.request.body
   var user = await User.findOne({
     phoneNumber,
     verifyCode
