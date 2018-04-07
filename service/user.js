@@ -42,7 +42,8 @@ export const verifyCode = async (ctx) => {
     return ;
   }
   // 获取验证码 ===
-  user.accessToken =  uuidv4()
+  let accessToken = uuidv4();
+  user.accessToken =  accessToken;
   await user.save()
-  return user;
+  return {user,accessToken};
 }
